@@ -1,5 +1,9 @@
 node default {
-	package { 'httpd': 
+	package { [ 'httpd', 'php' ] : 
 		ensure => installed,
+	}
+
+	service { 'httpd':
+		ensure => running,
 	}
 }
