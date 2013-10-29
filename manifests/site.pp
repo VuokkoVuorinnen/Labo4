@@ -1,4 +1,5 @@
 node default {
-	package { 'http': 
-		ensure => installed. }
+	package { 'httpd': 
+		ensure => installed,
+	}
 }
