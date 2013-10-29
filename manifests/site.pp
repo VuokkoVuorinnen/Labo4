@@ -1,9 +1,9 @@
 node default {
-	package { [ 'httpd', 'php' ] : 
+	package { [ 'httpd', 'php', 'mysql', 'mysql-server', 'php-mysql' ] : 
 		ensure => installed,
 	}
 
-	service { 'httpd':
+	service { [ 'httpd', 'mysqld' ] :
 		ensure => running,
 	}
 }
