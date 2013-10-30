@@ -4,11 +4,11 @@ node default {
 	
 	class { 'mysql::bindings':
 		php_enable	=> true,
-		}
+	}
 
 	class { 'apache': 
 		default_ssl_vhost	=> true,
-		}
+	}
 	
 	class { 'apache::mod::ssl': }
 	
@@ -27,6 +27,12 @@ node default {
 		grant		=> ['ALL'],
 		sql 		=> '/var/www/html/wordpress.sql',
 		enforce_sql => true,
+	}
+
+	exec { 'Bats testing':
+		require	=> Service['httpd'],
+		command	=> "bats /home/vagrant/tests/lamp.bats",
+		path	=> "/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/vagrant/bin",
 	}
 
 }
