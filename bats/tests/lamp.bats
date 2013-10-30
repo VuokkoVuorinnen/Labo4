@@ -13,3 +13,9 @@
 	[ "$?" -eq 0 ]     # exit status should be 0
 	[ -n "${result}" ] # output should not be empty
 }
+
+@test "port 443 should be listening" {
+        result="$(netstat -lnt | awk '$6 == "LISTEN" && $4 ~ ".443"')"
+        [ "$?" -eq 0 ]     # exit status should be 0
+        [ -n "${result}" ] # output should not be empty
+}
