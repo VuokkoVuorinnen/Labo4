@@ -15,11 +15,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.box_url = "http://packages.vstone.eu/vagrant-boxes/centos-6.x-64bit-latest.box"
   config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box"
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # config.vm.network :forwarded_port, guest: 80, host: 8080
-
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network :private_network, ip: "192.168.56.10"
@@ -37,6 +32,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "bats/bin", "/home/vagrant/bin"
   config.vm.synced_folder "bats/libexec", "/home/vagrant/libexec"
   config.vm.synced_folder "bats/tests", "/home/vagrant/tests"
+
+  # Some extra parameters
+  config.vm.provider :virtualbox do |vb|
+    vb.gui = false
+    vb.name = 'labo4'
+    vb.customize ["modifyvm", :id, '--cpus', 1 ]
+    vb.customize ["modifyvm", :id, '--memory', 512 ]
+  end
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.
