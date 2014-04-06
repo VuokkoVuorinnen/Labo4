@@ -8,8 +8,7 @@ node default {
 		'apache::mod::php':;
 	}
 
-	file {
-		"Make sure the wordpress.sql file exists":
+	file { 'Make sure the wordpress.sql file exists':
 		ensure => file,
 		path   => '/var/www/html/wordpress.sql',
   	}->
@@ -25,8 +24,8 @@ node default {
 
 	exec { 'Bats testing':
 		require => Service['httpd'],
-		command => "bats /home/vagrant/tests/lamp.bats",
-		path    => "/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/vagrant/bin",
+		command => 'bats /home/vagrant/tests/lamp.bats',
+		path    => '/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/vagrant/bin',
 	}
 
 }
