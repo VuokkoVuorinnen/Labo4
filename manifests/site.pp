@@ -1,18 +1,12 @@
 node default {	
 	
-	class { 'mysql::server': }
-	
-	class { 'mysql::bindings':
-		php_enable => true,
+	class { 
+		'mysql::server':;
+		'mysql::bindings':php_enable => true;
+		'apache':default_ssl_vhost => true;
+		'apache::mod::ssl':;
+		'apache::mod::php':;
 	}
-
-	class { 'apache': 
-		default_ssl_vhost => true,
-	}
-	
-	class { 'apache::mod::ssl': }
-	
-	class { 'apache::mod::php': }
 
 	file {
 		"Make sure the wordpress.sql file exists":
