@@ -12,18 +12,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-puppet.box"
   
-  # The box appears to be down, alternative listed below:
-  #config.vm.box_url = "http://packages.vstone.eu/vagrant-boxes/centos-6.x-64bit-latest.box"
-  #config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box"
-
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network :private_network, ip: "192.168.56.10"
-
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network :public_network
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -37,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Some extra parameters
   config.vm.provider :virtualbox do |vb|
     vb.gui = false
-    vb.name = 'labo4'
+    vb.name = 'lampstack'
     vb.customize ["modifyvm", :id, '--cpus', 1 ]
     vb.customize ["modifyvm", :id, '--memory', 512 ]
   end
