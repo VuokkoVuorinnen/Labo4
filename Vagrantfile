@@ -6,7 +6,8 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'centos-65-x86_64-puppetlabs'
   config.vm.box_url = 'http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-puppet.box'
-  
+
+  config.vm.hostname = 'foo.bar.com'
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network :private_network, ip: '192.168.56.10'
@@ -28,6 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision :puppet do |puppet|
+    puppet.options = '--hiera_config /etc/hiera.yaml'
     puppet.manifests_path = 'manifests'
     puppet.manifest_file  = 'site.pp'
     puppet.module_path = 'modules'
