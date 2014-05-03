@@ -1,6 +1,6 @@
-node default {	
+node default {
 
-  class { 
+  class {
     'mysql::server':;
     'mysql::bindings':php_enable => true;
     'apache':default_ssl_vhost   => true;
@@ -12,7 +12,7 @@ node default {
     ensure  => file,
     path    => '/var/www/html/wordpress.sql',
   }
-  
+
   mysql::db { 'wordpress':
     user        => 'vagrant',
     password    => 'vagrant',
@@ -20,7 +20,7 @@ node default {
     grant       => ['ALL'],
     sql         => '/var/www/html/wordpress.sql',
     enforce_sql => true,
-    require     => File['wordpress.sql'],   
+    require     => File['wordpress.sql'],
   }
 
   exec { 'Bats testing':
