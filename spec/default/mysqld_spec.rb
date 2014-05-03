@@ -16,5 +16,6 @@ end
 
 describe file('/etc/my.cnf') do
   it { should be_file }
+  it { should be_mode 644 }
 #  its(:content) { should match /ServerName default/ }
 end
