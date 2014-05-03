@@ -21,30 +21,15 @@ end
 
 describe file('/etc/httpd/conf/httpd.conf') do
   it { should be_file }
-#  its(:content) { should match /ServerName default/ }
+  it { should be_mode 644 }
+  its(:content) { should match /ServerName "foo.bar.com"/ }
 end
 
-### MySQL ###
-
-describe package('mysql') do
-  it { should be_installed }
+describe command('curl -s -o /dev/null -w "%{http_code}" http://192.168.56.10/') do
+  it { should return_stdout '200' }
 end
 
-describe service('mysqld') do
-  it { should be_running }
-end
-
-describe port(3306) do
-  it { should be_listening}
-end
-
-describe file('/etc/my.cnf') do
-  it { should be_file }
-#  its(:content) { should match /ServerName default/ }
-end
-
-### Php ###
-
-describe package('php') do
-  it { should be_installed }
+# here we pass the "-k" option to the curl command because otherwise we get some SSL verification errors
+describe command('curl -s -o /dev/null -w "%{http_code}" https://192.168.56.10/ -k') do
+  it { should return_stdout '200' }
 end
