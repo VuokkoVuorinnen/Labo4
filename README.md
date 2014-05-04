@@ -28,3 +28,4 @@ TODO List:
 * Enhance the ServerSpec and BATS tests
 * Run it through puppet-lint
 * Update the WordPress instance, or see if we can automate the download
+* Check SSL in the httpd tests
