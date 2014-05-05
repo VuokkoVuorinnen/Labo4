@@ -10,7 +10,7 @@ node default {
 
   file { 'wordpress.sql':
     ensure  => file,
-    path    => '/var/www/html/wordpress.sql',
+    path    => '/home/vagrant/files/wordpress.sql',
   }
 
   mysql::db { 'wordpress':
@@ -18,7 +18,7 @@ node default {
     password    => 'vagrant',
     host        => 'localhost',
     grant       => ['ALL'],
-    sql         => '/var/www/html/wordpress.sql',
+    sql         => '/home/vagrant/files/wordpress.sql',
     enforce_sql => true,
     require     => File['wordpress.sql'],
   }
@@ -30,4 +30,17 @@ node default {
     logoutput => true,
   }
 
+  file {'/etc/pki/tls/certs/localhost.crt':
+    source    => '/home/vagrant/files/localhost.crt',
+    mode      => '0600',
+    owner     => 'root',
+    group     => 'root',
+  }
+
+  file {'/etc/pki/tls/private/localhost.key':
+    source    => '/home/vagrant/files/localhost.key',
+    mode      => '0600',
+    owner     => 'root',
+    group     => 'root',
+  }
 }
