@@ -13,7 +13,7 @@ Then initialize the vagrant box
 
 	$ vagrant up
 
-Note that the BATS tests are run automatically. The ServerSpec tests have to be run by issues the following command:
+Note that the BATS tests are run automatically. The ServerSpec tests have to be run by issuing the following command:
 
 	$ rake spec
 

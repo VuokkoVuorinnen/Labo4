@@ -11,3 +11,7 @@ end
 describe command('hostname -f') do
 	it { should return_stdout 'foo.bar.com' }
 end
+
+describe port(22) do
+  it { should be_listening}
+end
