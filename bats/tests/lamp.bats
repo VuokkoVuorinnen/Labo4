@@ -1,13 +1,31 @@
 #! /usr/bin/env bats
-# vim: ft=sh 
+# vim: ft=sh
 # lamp.bats -- Test suite for a LAMP stack
+
+IP=192.168.56.10
+
+# General facts
+
+@test "my IP address should be ${IP}" {
+        result="$(facter ipaddress_eth1)"
+        [ "$?" -eq 0 ]     # exit status should be 0
+        [ "${result}" = "${IP}" ]
+}
+
+@test "my hostname should be foo.bar.com" {
+        result="$(hostname -f)"
+        [  "$?" -eq 0 ]
+        [  "${result}" == "foo.bar.com" ]
+}
+
+# Ports
 
 @test "port 22 should be listening" {
 	result="$(netstat -lnt | awk '$6 == "LISTEN" && $4 ~ ".22"')"
 	[ "$?" -eq 0 ]     # exit status should be 0
 	[ -n "${result}" ] # output should not be empty
 }
-        
+
 @test "port 80 should be listening" {
 	result="$(netstat -lnt | awk '$6 == "LISTEN" && $4 ~ ".80"')"
 	[ "$?" -eq 0 ]     # exit status should be 0
@@ -19,6 +37,8 @@
         [ "$?" -eq 0 ]     # exit status should be 0
         [ -n "${result}" ] # output should not be empty
 }
+
+# Services
 
 @test "service httpd should be running" {
 	result="$(sudo service httpd status | grep 'is running')"
@@ -44,6 +64,14 @@
         [ -n "${result}" ] # output should not be empty
 }
 
+# Packages
+
+@test "package httpd should be installed" {
+        result="$(rpm -qa | grep httpd)"
+        [ "$?" -eq 0 ]     # exit status should be 0
+        [ -n "${result}" ] # output should not be empty
+}
+
 @test "package php-mysql should be installed" {
 	result="$(rpm -qa | grep php-mysql)"
         [ "$?" -eq 0 ]     # exit status should be 0
@@ -54,4 +82,20 @@
 	result="$(rpm -qa | grep php)"
         [ "$?" -eq 0 ]     # exit status should be 0
         [ -n "${result}" ] # output should not be empty
+}
+
+# Others
+
+HTTPDCONFIG=/etc/httpd/conf/httpd.conf
+
+@test "/etc/httpd/conf/httpd.conf sould be a file with the corrrect mode" {
+        result="$(stat -c %a /etc/httpd/conf/httpd.conf)"
+        [ -f $file ]
+        [ "$result" -eq 644 ]
+}
+
+@test "/etc/httpd/conf/httpd.conf should contain the correct servername" {
+        result="$(cat /etc/httpd/conf/httpd.conf | grep 'ServerName "foo.bar.com"')"
+        [ "$?" -eq 0 ]
+        [ -n "$result" ]
 }
