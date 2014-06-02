@@ -129,3 +129,15 @@ HTTPDCONFIG=/etc/httpd/conf/httpd.conf
         [ -f $file ]          # it should be a file
         [ "$result" -eq 644 ] # filemode should be 644
 }
+
+@test "HTTP request of index should return correct HTML page" {
+        result="$(curl http://192.168.56.10/ 2>/dev/null | grep "Welcome to WordPress. This is your first post. Edit or delete it, then start blogging" | wc -l)"
+        [ "$?" -eq 0 ]       # exit status should be 0
+        [ "$result" == "1" ] # Output should match 1
+}
+
+@test "HTTPS request of index should return correct HTML page" {
+        result="$(curl -k  https://192.168.56.10/ 2>/dev/null | grep "Welcome to WordPress. This is your first post. Edit or delete it, then start blogging" | wc -l)"
+        [ "$?" -eq 0 ]       # exit status should be 0
+        [ "$result" == "1" ] # Output should match 1
+}
