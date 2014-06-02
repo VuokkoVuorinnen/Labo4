@@ -1,13 +1,13 @@
-Labo4
+Vagrant puppet lampstack
 =====
 
 CentOS via Vagrant + Puppet Lamp stack + Simple wordpress installation
 
 Usage:
 
-	$ git pull git@github.com:VuokkoVuorinnen/Labo4.git
-	$ cd Labo4
-	$ git submodule update --init
+	$ git pull git@github.com:VuokkoVuorinnen/vagrant-puppet-lampstack.git
+	$ cd vagrant-puppet-lampstack
+	$ git submodule update --init --recursive
 
 Then initialize the vagrant box
 
@@ -17,15 +17,20 @@ Note that the BATS tests are run automatically. The ServerSpec tests have to be 
 
 	$ rake spec
 
+BATS tests can be run by sshing into the machine and running the tests:
+
+	$ vagrant ssh
+	[vagrant@foo ~]$ bats tests/lamp.bats
+
 The Wordpress website provided by this vagrantbox is visible on:
 
 	http://192.168.56.10/
 	https://192.168.56.10/
 
-TODO List:
+Destroying the environment:
 
-* Implement Cucumber tests
-* Enhance the ServerSpec and BATS tests
-* Run it through puppet-lint
-* Update the WordPress instance, or see if we can automate the download
-* Check SSL in the httpd tests
+	$ vagrant destroy -f
+	$ cd ..
+	$ rm -rf vagrant-puppet-lampstack
+
+The template and original assigment were made by Bert Van Vreckem, for the Linux System Administration course taught at HoGent.
